@@ -122,7 +122,9 @@
     <Compile Include="Assets\Assest Store Imports\StellarGen\Resources\Camera\EffectsDisabler.cs" />
     <Compile Include="Assets\Assest Store Imports\StellarGen\Resources\Camera\MouseLook.cs" />
     <Compile Include="Assets\Scripts\CamChange.cs" />
+    <Compile Include="Assets\Scripts\FollowCam.cs" />
     <Compile Include="Assets\Scripts\HealthAndDeduction.cs" />
+    <Compile Include="Assets\Scripts\MissileScript.cs" />
     <Compile Include="Assets\Scripts\PlayerFireWeapon.cs" />
     <Compile Include="Assets\Scripts\RotateCam.cs" />
     <Compile Include="Assets\Scripts\ShipMovement.cs" />
