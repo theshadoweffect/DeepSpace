@@ -7,10 +7,14 @@ public class PlayerFireWeapon : MonoBehaviour {
     public double damage = 10.0;
     public float maxRange = 1000.0F;
     public float speed = 1000.0F;
+    //RELOAD SPEED
+    public float ReloadSpeed = 1.0F;
+    private float timeStamp;
     //SCRIPTS AND TARGETS
     GameObject target;
     HealthAndDeduction targethealth;
     MissileScript missile;
+   // BulletScript bullet;
     //ENUM OPERATORS
     //                          0        1          2
     public enum damageType {kenetic, thermal, concusive}
@@ -22,15 +26,21 @@ public class PlayerFireWeapon : MonoBehaviour {
     //TYPE VARIABLES
    public weaponType typeWeapon = weaponType.laser; //for firing system
    public damageType typeDamage = damageType.thermal; //for multiplier
-    
-	// START
 
+    // START
+    void start() {
+        timeStamp = Time.time + ReloadSpeed;
+
+    }
 	//UPDATE
 	void Update () {
-        
-        if (Input.GetButton("Fire1"))
+        if (timeStamp <= Time.time)//checks reload speed
         {
-            Fire();
+            if (Input.GetButton("Fire1"))
+            {
+                Fire();
+                timeStamp = Time.time + ReloadSpeed;//Reloads weapon
+            }
         }
 	}
     //FIRING MECHANISM
@@ -63,8 +73,8 @@ public class PlayerFireWeapon : MonoBehaviour {
             Vector3 dir = transform.TransformDirection(Vector3.forward);
             if (Physics.Raycast(transform.position, dir, out hit, maxRange))
             {
-                
-                clone = Instantiate(projectile, transform.position, transform.rotation) as GameObject;
+                Vector3 offset = new Vector3(0, 0, 2);
+                clone = Instantiate(projectile, transform.position+offset, transform.rotation) as GameObject;
                 target = hit.collider.gameObject;//assigns target
                 missile = (MissileScript) clone.GetComponent(typeof(MissileScript));
                 missile.SetTarget(target);
@@ -75,9 +85,16 @@ public class PlayerFireWeapon : MonoBehaviour {
         }//BULLET SPAWN
         if (typeWeapon == weaponType.turret)
         {//fires a cloned projectile
-            clone = Instantiate(projectile, transform.position, transform.rotation) as GameObject;
-            clone.GetComponent<Rigidbody>().AddRelativeForce(transform.TransformDirection(new Vector3(0, 0, speed)));
+            print("Cannon Fire!");
+            
+            Vector3 offset = new Vector3(0, 0, 2);
+            Vector3 bulletTrajectory = new Vector3(0, 0, speed);
+            clone = Instantiate(projectile, transform.position+offset, transform.rotation) as GameObject;
+       //     bullet = (BulletScript)clone.GetComponent(typeof(BulletScript));
+          
+            clone.GetComponent<Rigidbody>().AddRelativeForce(bulletTrajectory);
         }
+        
     }
 
 }

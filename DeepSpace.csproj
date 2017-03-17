@@ -121,6 +121,7 @@
     <Compile Include="Assets\Assest Store Imports\StellarGen\Resources\Camera\Console.cs" />
     <Compile Include="Assets\Assest Store Imports\StellarGen\Resources\Camera\EffectsDisabler.cs" />
     <Compile Include="Assets\Assest Store Imports\StellarGen\Resources\Camera\MouseLook.cs" />
+    <Compile Include="Assets\Scripts\BulletScript.cs" />
     <Compile Include="Assets\Scripts\CamChange.cs" />
     <Compile Include="Assets\Scripts\FollowCam.cs" />
     <Compile Include="Assets\Scripts\HealthAndDeduction.cs" />

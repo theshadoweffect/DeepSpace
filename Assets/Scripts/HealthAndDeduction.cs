@@ -108,6 +108,12 @@ public class HealthAndDeduction : MonoBehaviour {
             }
 
         }
-    //END DAMAGE CALCS
+        //END DAMAGE CALCS
+        double curhull = hull;
+        double curshield = shield;
+
+      //  Debug.Log("Current Hull: ", hull);
+       // print("Current Shield: ", shield);
+       // print("Current Armour", curarmour);
     }
 }
