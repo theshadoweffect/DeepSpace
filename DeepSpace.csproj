@@ -123,12 +123,14 @@
     <Compile Include="Assets\Assest Store Imports\StellarGen\Resources\Camera\MouseLook.cs" />
     <Compile Include="Assets\Scripts\BulletScript.cs" />
     <Compile Include="Assets\Scripts\CamChange.cs" />
+    <Compile Include="Assets\Scripts\ConstructionScript.cs" />
     <Compile Include="Assets\Scripts\FollowCam.cs" />
     <Compile Include="Assets\Scripts\HealthAndDeduction.cs" />
     <Compile Include="Assets\Scripts\MissileScript.cs" />
     <Compile Include="Assets\Scripts\PlayerFireWeapon.cs" />
     <Compile Include="Assets\Scripts\RotateCam.cs" />
     <Compile Include="Assets\Scripts\ShipMovement.cs" />
+    <Compile Include="Assets\Scripts\WeaponSwitch.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Assest Store Imports\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
