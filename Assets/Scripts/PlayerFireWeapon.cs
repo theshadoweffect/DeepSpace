@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerFireWeapon : MonoBehaviour {
+public class PlayerFireWeapon : MonoBehaviour
+{
     //DAMAGE AND RANGE AND SPEED
     public double damage = 10.0;
     public float maxRange = 1000.0F;
@@ -14,26 +15,28 @@ public class PlayerFireWeapon : MonoBehaviour {
     GameObject target;
     HealthAndDeduction targethealth;
     MissileScript missile;
-   // BulletScript bullet;
+    // BulletScript bullet;
     //ENUM OPERATORS
     //                          0        1          2
-    public enum damageType {kenetic, thermal, concusive}
-    public enum weaponType {missile, laser,  turret}
-   
+    public enum damageType { kenetic, thermal, concusive }
+    public enum weaponType { missile, laser, turret }
+
     //PROJECTILES
     public GameObject projectile;// holds projectile for missile and turret based firing mechanisms
     private GameObject clone;
     //TYPE VARIABLES
-   public weaponType typeWeapon = weaponType.laser; //for firing system
-   public damageType typeDamage = damageType.thermal; //for multiplier
+    public weaponType typeWeapon = weaponType.laser; //for firing system
+    public damageType typeDamage = damageType.thermal; //for multiplier
 
     // START
-    void start() {
+    void start()
+    {
         timeStamp = Time.time + ReloadSpeed;
 
     }
-	//UPDATE
-	void Update () {
+    //UPDATE
+    void Update()
+    {
         if (timeStamp <= Time.time)//checks reload speed
         {
             if (Input.GetButton("Fire1"))
@@ -42,9 +45,10 @@ public class PlayerFireWeapon : MonoBehaviour {
                 timeStamp = Time.time + ReloadSpeed;//Reloads weapon
             }
         }
-	}
+    }
     //FIRING MECHANISM
-    private void Fire() {
+    private void Fire()
+    {
         RaycastHit hit;
         //LASER HITSCAN
         if (typeWeapon == weaponType.laser)
@@ -52,15 +56,15 @@ public class PlayerFireWeapon : MonoBehaviour {
             Vector3 dir = transform.TransformDirection(Vector3.forward);
             if (Physics.Raycast(transform.position, dir, out hit, maxRange))
             {
-                
-                
+
+
                 Debug.Log(hit.transform.name + " found!");// declares if object was found
                 print("Found a target game object distance of " + hit.distance);//Declares target distance
 
                 Debug.DrawLine(gameObject.transform.position, hit.point, Color.red, 1.0F);// draws firingline to target
 
                 target = hit.collider.gameObject;//assigns target
-                targethealth = (HealthAndDeduction) target.GetComponent(typeof(HealthAndDeduction));
+                targethealth = (HealthAndDeduction)target.GetComponent(typeof(HealthAndDeduction));
                 targethealth.DamageCalc(typeDamage, damage);
 
                 print("damaging target");//Declares when Target us damaged
@@ -74,10 +78,11 @@ public class PlayerFireWeapon : MonoBehaviour {
             if (Physics.Raycast(transform.position, dir, out hit, maxRange))
             {
                 Vector3 offset = new Vector3(0, 0, 2);
-                clone = Instantiate(projectile, transform.position+offset, transform.rotation) as GameObject;
+                clone = Instantiate(projectile, transform.position + offset, transform.rotation) as GameObject;
                 target = hit.collider.gameObject;//assigns target
-                missile = (MissileScript) clone.GetComponent(typeof(MissileScript));
+                missile = (MissileScript)clone.GetComponent(typeof(MissileScript));
                 missile.SetTarget(target);
+                Debug.DrawLine(gameObject.transform.position, hit.point, Color.red, 1.0F);// draws firingline to target
                 Debug.Log(hit.transform.name + " found!");// declares if object was found
                 print("Found a target game object distance of " + hit.distance);//Declares target distance
                 print("firing missile");//Declares when Target us damaged
@@ -86,15 +91,15 @@ public class PlayerFireWeapon : MonoBehaviour {
         if (typeWeapon == weaponType.turret)
         {//fires a cloned projectile
             print("Cannon Fire!");
-            
-            Vector3 offset = new Vector3(0, 0, 2);
+
+            Vector3 offset = new Vector3(0, 0, 0);
             Vector3 bulletTrajectory = new Vector3(0, 0, speed);
-            clone = Instantiate(projectile, transform.position+offset, transform.rotation) as GameObject;
-       //     bullet = (BulletScript)clone.GetComponent(typeof(BulletScript));
-          
+            clone = Instantiate(projectile, transform.position + offset, transform.rotation) as GameObject;
+            //     bullet = (BulletScript)clone.GetComponent(typeof(BulletScript));
+
             clone.GetComponent<Rigidbody>().AddRelativeForce(bulletTrajectory);
         }
-        
+
     }
 
 }
