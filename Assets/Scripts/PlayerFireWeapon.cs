@@ -13,6 +13,7 @@ public class PlayerFireWeapon : MonoBehaviour
     private float timeStamp;
     //SCRIPTS AND TARGETS
     GameObject target;
+    GameObject prevTarget;
     HealthAndDeduction targethealth;
     MissileScript missile;
     // BulletScript bullet;
@@ -71,22 +72,31 @@ public class PlayerFireWeapon : MonoBehaviour
                 //   gameObject.SendMessage("DamageCalc", typeDamage, damage);
             }
         }
+//==============================================================================
         //MISSILE SPAWN
         if (typeWeapon == weaponType.missile)
         { //spawns a clone projectile with a target location
             Vector3 dir = transform.TransformDirection(Vector3.forward);
-            if (Physics.Raycast(transform.position, dir, out hit, maxRange))
+            if (Physics.Raycast(transform.position, dir, out hit, maxRange))//If target detected then fire
             {
-                Vector3 offset = new Vector3(0, 0, 2);
+                Vector3 offset = new Vector3(0, 0, 0);
                 clone = Instantiate(projectile, transform.position + offset, transform.rotation) as GameObject;
                 target = hit.collider.gameObject;//assigns target
                 missile = (MissileScript)clone.GetComponent(typeof(MissileScript));
                 missile.SetTarget(target);
+                prevTarget = target;
                 Debug.DrawLine(gameObject.transform.position, hit.point, Color.red, 1.0F);// draws firingline to target
                 Debug.Log(hit.transform.name + " found!");// declares if object was found
                 print("Found a target game object distance of " + hit.distance);//Declares target distance
                 print("firing missile");//Declares when Target us damaged
             }
+            else if (target != null) {// if target not detected but target not null fire
+                Vector3 offset = new Vector3(0, 0, 0);
+                clone = Instantiate(projectile, transform.position + offset, transform.rotation) as GameObject;
+                missile = (MissileScript)clone.GetComponent(typeof(MissileScript));
+                missile.SetTarget(prevTarget);
+            }
+//==============================================================
         }//BULLET SPAWN
         if (typeWeapon == weaponType.turret)
         {//fires a cloned projectile

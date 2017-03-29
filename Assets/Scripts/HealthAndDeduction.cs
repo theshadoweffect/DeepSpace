@@ -45,8 +45,7 @@ public class HealthAndDeduction : MonoBehaviour
         //Object Regen check
         if (timeStamp <= Time.time)
         {
-            if (Input.GetKeyDown(KeyCode.R))
-            {
+            
                 timeStamp = Time.time + cooldownregen;// resets timer
                 if (hull < maxhealth && shield >= maxshield)
                 {
@@ -58,7 +57,7 @@ public class HealthAndDeduction : MonoBehaviour
                     shield = shield + 2 * regen;
 
                 }
-            }//END REGEN
+            //END REGEN
              //MAX STATS CHECKS
         }
         if (hull > maxhealth)
@@ -91,6 +90,11 @@ public class HealthAndDeduction : MonoBehaviour
             if (shield > 0)
             {
                 shield = shield - 2 * DamageAmount;
+                if(shield < 0)
+                {
+                    DamageAmount = -shield;
+                    hull = hull - DamageAmount / (armour + 5);
+                }
             }
             else
             {
@@ -104,13 +108,22 @@ public class HealthAndDeduction : MonoBehaviour
             if (shield > 0)
             {
                 shield = shield - 2 * DamageAmount;
+                if (shield < 0)
+                {
+                    DamageAmount = -shield;
+                    hull = hull - DamageAmount / (armour + 20);
+                    if (armour > 0)
+                    {
+                        armour = armour - DamageAmount / (5 * armour+1);// lasers weaken armour over time
+                    }
+                }
             }
             else
             {
-                hull = hull - DamageAmount / (armour + 5);
+                hull = hull - DamageAmount / (armour + 20);
                 if (armour > 0)
                 {
-                    armour = armour - DamageAmount / (4 * armour);// lasers weaken armour over time
+                    armour = armour - DamageAmount / (4 * armour+1);// lasers weaken armour over time
                 }
             }
 
@@ -119,7 +132,13 @@ public class HealthAndDeduction : MonoBehaviour
         {
             if (shield > 0)
             {
+
                 shield = shield - DamageAmount / 4;
+                if (shield < 0)
+                {
+                    DamageAmount = -shield;
+                    hull = hull - DamageAmount / (2 * (armour + 1));
+                }
             }
             else
             {
@@ -130,7 +149,7 @@ public class HealthAndDeduction : MonoBehaviour
         //END DAMAGE CALCS
         double curhull = hull;
         double curshield = shield;
-
+        timeStamp = Time.time + cooldownregen;// resets timer
         //  Debug.Log("Current Hull: ", hull);
         // print("Current Shield: ", shield);
         // print("Current Armour", curarmour);
