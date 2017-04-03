@@ -59,8 +59,8 @@ public class PlayerFireWeapon : MonoBehaviour
             {
 
 
-                Debug.Log(hit.transform.name + " found!");// declares if object was found
-                print("Found a target game object distance of " + hit.distance);//Declares target distance
+               // Debug.Log(hit.transform.name + " found!");// declares if object was found
+              //  print("Found a target game object distance of " + hit.distance);//Declares target distance
 
                 Debug.DrawLine(gameObject.transform.position, hit.point, Color.red, 1.0F);// draws firingline to target
 
@@ -68,7 +68,7 @@ public class PlayerFireWeapon : MonoBehaviour
                 targethealth = (HealthAndDeduction)target.GetComponent(typeof(HealthAndDeduction));
                 targethealth.DamageCalc(typeDamage, damage);
 
-                print("damaging target");//Declares when Target us damaged
+               // print("damaging target");//Declares when Target us damaged
                 //   gameObject.SendMessage("DamageCalc", typeDamage, damage);
             }
         }
@@ -86,9 +86,9 @@ public class PlayerFireWeapon : MonoBehaviour
                 missile.SetTarget(target);
                 prevTarget = target;
                 Debug.DrawLine(gameObject.transform.position, hit.point, Color.red, 1.0F);// draws firingline to target
-                Debug.Log(hit.transform.name + " found!");// declares if object was found
-                print("Found a target game object distance of " + hit.distance);//Declares target distance
-                print("firing missile");//Declares when Target us damaged
+            //    Debug.Log(hit.transform.name + " found!");// declares if object was found
+               // print("Found a target game object distance of " + hit.distance);//Declares target distance
+             //   print("firing missile");//Declares when Target us damaged
             }
             else if (target != null) {// if target not detected but target not null fire
                 Vector3 offset = new Vector3(0, 0, 0);
@@ -100,7 +100,7 @@ public class PlayerFireWeapon : MonoBehaviour
         }//BULLET SPAWN
         if (typeWeapon == weaponType.turret)
         {//fires a cloned projectile
-            print("Cannon Fire!");
+       //     print("Cannon Fire!");
 
             Vector3 offset = new Vector3(0, 0, 0);
             Vector3 bulletTrajectory = new Vector3(0, 0, speed);

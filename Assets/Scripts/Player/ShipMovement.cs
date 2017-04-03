@@ -57,7 +57,7 @@ public class ShipMovement : MonoBehaviour {
         
         if (Input.GetKey(KeyCode.Z))
         {//stops all movement 
-            print("Z has been pressed");
+            
 
             GetComponent<Rigidbody>().velocity = Vector3.zero;
 

@@ -7,12 +7,15 @@ public class WeaponSwitch : MonoBehaviour {
     public GameObject[] CannonArr;
     public GameObject[] MissileArr;
     public GameObject[] LaserArr;
-    public int numCannons = 4;
-    public int numMissiles = 4;
-    public int numLasers = 2;
+    int numCannons;
+    int numMissiles;
+    public int numLasers;
     
  
     void Start() {//CANNONS ARE AUTOMATICALLY SELECTED FIRST
+        numCannons = CannonArr.Length;
+        numMissiles = MissileArr.Length;
+        numLasers = LaserArr.Length;
         for (int ii = 0; ii < numCannons; ii++)
         {
             CannonArr[ii].SetActive(true);

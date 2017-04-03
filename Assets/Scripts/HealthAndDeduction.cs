@@ -47,16 +47,22 @@ public class HealthAndDeduction : MonoBehaviour
         {
             
                 timeStamp = Time.time + cooldownregen;// resets timer
-                if (hull < maxhealth && shield >= maxshield)
-                {
-                    hull = hull + regen;
-                    armour = armour + regenArmour;
-                }
-                else if (shield < maxshield)
-                {
-                    shield = shield + 2 * regen;
+            if (hull < maxhealth && shield >= maxshield)
+            {
+                hull = hull + regen;
+                armour = armour + regenArmour;
+            }
+            else if (shield < maxshield)
+            {
+                shield = shield + 2 * regen;
 
-                }
+            }
+            else if (armour < maxarmour) {
+                armour = armour + regenArmour;
+
+            }
+
+
             //END REGEN
              //MAX STATS CHECKS
         }
