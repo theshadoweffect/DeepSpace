@@ -13,4 +13,7 @@ public class TeamScript : MonoBehaviour {
 	public TeamSet GetTeam(){
 		return team;	
 	}
+    public int GetPriority() {
+        return Priority;
+    }
 }

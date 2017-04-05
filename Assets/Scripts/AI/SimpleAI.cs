@@ -36,46 +36,27 @@ public class SimpleAI : MonoBehaviour {
         }
     }
 	void OnTriggerEnter(Collider collider) {
-		TeamScript.TeamSet aiTeam;
+	
 		RaycastHit hit;
         GameObject CheckTarget;
         CheckTarget = collider.gameObject;
-        Vector3 dir = CheckTarget.transform.position - transform.position;
+        Vector3 dir = transform.position - CheckTarget.transform.position;
 
         
 
-        print("Target detected!");
-        
-        if (Physics.Raycast(transform.position, dir, out hit)){
-            print("Target scanned!");
-            Debug.DrawLine(gameObject.transform.position, hit.point, Color.red, 1.0F);
-            if (collider.gameObject == hit.collider.gameObject) {
+        if (Physics.Raycast(CheckTarget.transform.position, dir, out hit))
+        {
+            print("Target detected!");
+            Debug.DrawLine(CheckTarget.transform.position, hit.point, Color.red, 1.0F);
+            if (gameObject == hit.collider.gameObject)
+            {
                 print("Target visable");
-              
-				teamScript = (TeamScript)CheckTarget.gameObject.GetComponent(typeof(TeamScript));
+                Scan(CheckTarget);
 
-               if (teamScript != null)
-               {
-                    print("Confirming target");
-                    targetTeam = teamScript.GetTeam();
-                    teamScript = (TeamScript) GetComponent(typeof(TeamScript));
-                    aiTeam = teamScript.GetTeam();
-
-                    if (targetTeam != aiTeam && targetTeam != neutral)
-                    {
-                        target = collider.gameObject;
-                        print("Target confirmed");
-                    }
-                }
-                else {
-                    print("Non viable target");
-                }
-			}
-
-
-		}
-        Debug.DrawLine(gameObject.transform.position, hit.point, Color.red, 1.0F);
-         target = collider.gameObject;
+            }
+        }
+     
+       //  target = collider.gameObject;
     }
    
     void OnTriggerExit(Collider colision)
@@ -98,23 +79,24 @@ public class SimpleAI : MonoBehaviour {
     }
     void Move() {
         RaycastHit hit;
-        Vector3 dir = target.transform.position - transform.position;
-        Physics.Raycast(transform.position, dir, out hit);
-        Debug.DrawLine(gameObject.transform.position, hit.point, Color.red, 1.0F);
-        if (hit.distance <= maxRange)
+        Vector3 dir =  transform.position - target.transform.position;
+        Physics.Raycast(target.transform.position, dir, out hit);
+        Debug.DrawLine(target.transform.position, hit.point, Color.red, 1.0F);
+        Vector3 toTarget = target.transform.position - transform.position;
+        if (hit.distance >= maxRange)
         {
-            Vector3 toTarget = target.transform.position - transform.position;
+           
             GetComponent<Rigidbody>().velocity = toTarget.normalized * shipSpeed;
-            transform.forward = toTarget.normalized;
-
+        
+            
         }
-        else if (hit.distance >= minRange)
+        else if (hit.distance <= minRange)
         {
-            Vector3 toTarget = target.transform.position - transform.position;
+            
             GetComponent<Rigidbody>().velocity = -toTarget.normalized * shipSpeed;
-            transform.forward = toTarget.normalized;
+           
         }
-
+        transform.forward = toTarget.normalized;
     }
     void Fire() {
         AiWeapons FiringCommand;
@@ -134,4 +116,44 @@ public class SimpleAI : MonoBehaviour {
             FiringCommand.Fire();
         }
     }
-}
+    void Scan(GameObject CheckTarget) {
+        int newTargPrior;
+        int CurTargPrior;
+        TeamScript.TeamSet aiTeam;
+
+        teamScript = (TeamScript)CheckTarget.gameObject.GetComponent(typeof(TeamScript));
+
+            if (teamScript != null)
+            {
+                print("Confirming target");
+                targetTeam = teamScript.GetTeam();
+                newTargPrior = teamScript.GetPriority();//Loads priority into newTargPrior
+                teamScript = (TeamScript)GetComponent(typeof(TeamScript));
+                aiTeam = teamScript.GetTeam();
+
+                if (targetTeam != aiTeam && targetTeam != neutral)
+                {
+
+                    if (target == null)
+                    {
+                        target = CheckTarget;
+                        print("Target confirmed");
+                    }
+                    else
+                    {
+                        //Checks priority
+                        teamScript = (TeamScript)target.gameObject.GetComponent(typeof(TeamScript));//Gets current targ teamScript
+                        CurTargPrior = teamScript.GetPriority();//Gets current targ priority
+                        if (newTargPrior > CurTargPrior)
+                        {
+                            target = CheckTarget;
+                        }
+                    }
+                }
+            }
+            else {
+                print("Non viable target");
+            }
+        }
+    }
+

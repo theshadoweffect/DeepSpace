@@ -105,8 +105,8 @@ public class AiWeapons : MonoBehaviour {
     //================================================================================================
     void Laser() {
         RaycastHit hit;
-        Vector3 dir = transform.TransformDirection(Vector3.forward);
-        if (Physics.Raycast(transform.position, dir, out hit, maxRange))
+        
+        if (Physics.Raycast(transform.position, transform.forward, out hit, maxRange))
         {
 
 
