@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SimpleAI : MonoBehaviour {
+    //Script Variables
 	private TeamScript.TeamSet targetTeam;
 	private TeamScript.TeamSet neutral = TeamScript.TeamSet.NEUTRAL;
+    //Ranges
     public float minRange = 1.0F;
     public float maxRange = 10.0F;
+    //Weapon GameObjects
     public GameObject[] CannonArr;
     public GameObject[] MissileArr;
     public GameObject[] LaserArr;
+    //Weapon Counters
     int CannonNum;
     int MissileNum;
     int LaserNum;
+    //Other
     TeamScript teamScript;
     GameObject target;
 	public float shipSpeed = 1.0f;
@@ -42,23 +47,42 @@ public class SimpleAI : MonoBehaviour {
         CheckTarget = collider.gameObject;
         Vector3 dir = transform.position - CheckTarget.transform.position;
 
-        
 
-        if (Physics.Raycast(CheckTarget.transform.position, dir, out hit))
-        {
-            print("Target detected!");
-            Debug.DrawLine(CheckTarget.transform.position, hit.point, Color.red, 1.0F);
-            if (gameObject == hit.collider.gameObject)
+        if (Scan(CheckTarget)) {
+            if (Physics.Raycast(CheckTarget.transform.position, dir, out hit))
             {
-                print("Target visable");
-                Scan(CheckTarget);
-
+                print("Target detected!");
+                Debug.DrawLine(CheckTarget.transform.position, hit.point, Color.red, 1.0F);
+                if (gameObject == hit.collider.gameObject)
+                {
+                    target = CheckTarget;
+                }
             }
         }
-     
        //  target = collider.gameObject;
     }
-   
+    void OnTriggerStay(Collider collider) {
+        RaycastHit hit;
+        GameObject CheckTarget;
+        CheckTarget = collider.gameObject;
+        Vector3 dir = transform.position - CheckTarget.transform.position;
+        if (target == null)
+        {
+
+            if (Scan(CheckTarget))
+            {
+                if (Physics.Raycast(CheckTarget.transform.position, dir, out hit))
+                {
+                    print("Target detected!");
+                    Debug.DrawLine(CheckTarget.transform.position, hit.point, Color.red, 1.0F);
+                    if (gameObject == hit.collider.gameObject)
+                    {
+                        target = CheckTarget;
+                    }
+                }
+            }
+        }
+    }
     void OnTriggerExit(Collider colision)
     {
         if(target != null)
@@ -116,7 +140,7 @@ public class SimpleAI : MonoBehaviour {
             FiringCommand.Fire();
         }
     }
-    void Scan(GameObject CheckTarget) {
+    bool Scan(GameObject CheckTarget) {
         int newTargPrior;
         int CurTargPrior;
         TeamScript.TeamSet aiTeam;
@@ -138,6 +162,7 @@ public class SimpleAI : MonoBehaviour {
                     {
                         target = CheckTarget;
                         print("Target confirmed");
+                        return true;
                     }
                     else
                     {
@@ -146,14 +171,17 @@ public class SimpleAI : MonoBehaviour {
                         CurTargPrior = teamScript.GetPriority();//Gets current targ priority
                         if (newTargPrior > CurTargPrior)
                         {
-                            target = CheckTarget;
+                            return true;
                         }
                     }
                 }
             }
             else {
                 print("Non viable target");
+            return false;
             }
+        return false;
         }
+        
     }
 

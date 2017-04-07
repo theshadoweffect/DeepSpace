@@ -9,7 +9,7 @@ public class WeaponSwitch : MonoBehaviour {
     public GameObject[] LaserArr;
     int numCannons;
     int numMissiles;
-    public int numLasers;
+    int numLasers;
     
  
     void Start() {//CANNONS ARE AUTOMATICALLY SELECTED FIRST

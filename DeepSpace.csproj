@@ -123,6 +123,7 @@
     <Compile Include="Assets\Assest Store Imports\StellarGen\Resources\Camera\MouseLook.cs" />
     <Compile Include="Assets\Scripts\AI\AiWeapons.cs" />
     <Compile Include="Assets\Scripts\AI\SimpleAI.cs" />
+    <Compile Include="Assets\Scripts\AI\Spawner.cs" />
     <Compile Include="Assets\Scripts\AI\TeamScript.cs" />
     <Compile Include="Assets\Scripts\HealthAndDeduction.cs" />
     <Compile Include="Assets\Scripts\Other\BulletScript.cs" />
