@@ -29,43 +29,43 @@ public class ConstructionScript : MonoBehaviour {
         //modify Selector
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-            selector = 0;
+            selector = 9;
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            selector = 1;
+            selector = 0;
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            selector = 2;
+            selector = 1;
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            selector = 3;
+            selector = 2;
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            selector = 4;
+            selector = 3;
         }
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            selector = 5;
+            selector = 4;
         }
         if (Input.GetKeyDown(KeyCode.Alpha6))
         {
-            selector = 6;
+            selector = 5;
         }
         if (Input.GetKeyDown(KeyCode.Alpha7))
         {
-            selector = 7;
+            selector = 6;
         }
         if (Input.GetKeyDown(KeyCode.Alpha8))
         {
-            selector = 8;
+            selector = 7;
         }
         if (Input.GetKeyDown(KeyCode.Alpha9))
         {
-            selector = 9;
+            selector = 8;
         }
 
         //Selection check

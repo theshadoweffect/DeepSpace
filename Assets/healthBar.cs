@@ -5,7 +5,8 @@ using Image=UnityEngine.UI.Image;
 
 public class healthBar : MonoBehaviour {
     Image HealthBar;
-    float tmpHealth=1;
+    float tmpHealth;
+	public GameObject playerShip;
 	// Use this for initialization
 	void Start () {
         HealthBar=GameObject.Find("HealthBar").transform.FindChild("Foreground").GetComponent <Image>();
@@ -13,6 +14,8 @@ public class healthBar : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        HealthBar.fillAmount = tmpHealth;
+		HealthAndDeduction healthGet = (HealthAndDeduction)playerShip.GetComponent<HealthAndDeduction> ();
+		tmpHealth = (float)healthGet.GetHealthPercent ();
+		HealthBar.fillAmount = tmpHealth;
 	}
 }
