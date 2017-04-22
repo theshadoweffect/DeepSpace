@@ -89,6 +89,7 @@
      <Compile Include="Assets\Scripts\AI\Spawner.cs" />
      <Compile Include="Assets\Scripts\AI\TeamScript.cs" />
      <Compile Include="Assets\Scripts\HealthAndDeduction.cs" />
+     <Compile Include="Assets\Scripts\Other\AudioStuff.cs" />
      <Compile Include="Assets\Scripts\Other\BulletScript.cs" />
      <Compile Include="Assets\Scripts\Other\MissileScript.cs" />
      <Compile Include="Assets\Scripts\Player\CamChange.cs" />
@@ -98,6 +99,9 @@
      <Compile Include="Assets\Scripts\Player\RotateCam.cs" />
      <Compile Include="Assets\Scripts\Player\ShipMovement.cs" />
      <Compile Include="Assets\Scripts\Player\WeaponSwitch.cs" />
+     <Compile Include="Assets\Scripts\Player\healthBar.cs" />
+     <Compile Include="Assets\Scripts\Player\shieldBarScript.cs" />
+     <Compile Include="Assets\exitScript.cs" />
      <None Include="Assets\Assest Store Imports\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Assest Store Imports\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
      <None Include="Assets\Assest Store Imports\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\SeparableWeightedBlurDof34.shader" />

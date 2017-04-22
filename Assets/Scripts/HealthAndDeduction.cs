@@ -87,6 +87,15 @@ public class HealthAndDeduction : MonoBehaviour
             shield = 0;
         }
     }
+	//PRECENTAGE CALC
+	public double GetShieldPercent(){
+
+		return (shield / maxshield);
+	}
+	public double GetHealthPercent(){
+	
+		return (hull / maxhealth);
+	}
     //DAMAGE CALCULATORS
     public void DamageCalc(PlayerFireWeapon.damageType type, double DamageAmount)
     {

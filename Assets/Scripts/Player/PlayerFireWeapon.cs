@@ -8,6 +8,8 @@ public class PlayerFireWeapon : MonoBehaviour
     public double damage = 10.0;
     public float maxRange = 1000.0F;
     public float speed = 1000.0F;
+	public AudioClip fireClip;
+	public AudioClip failClip;
     //RELOAD SPEED
     public float ReloadSpeed = 1.0F;
     private float timeStamp;
@@ -38,14 +40,17 @@ public class PlayerFireWeapon : MonoBehaviour
     //UPDATE
     void Update()
     {
-        if (timeStamp <= Time.time)//checks reload speed
-        {
-            if (Input.GetButton("Fire1"))
-            {
-                Fire();
-                timeStamp = Time.time + ReloadSpeed;//Reloads weapon
-            }
-        }
+		if (timeStamp <= Time.time) {//checks reload speed
+			if (Input.GetButton ("Fire1")) {
+				Fire ();
+				timeStamp = Time.time + ReloadSpeed;//Reloads weapon
+			}
+		} else {
+			if(Input.GetButtonDown("Fire1")){
+				//PlaySound (failClip);
+			}
+		
+		}
     }
     //FIRING MECHANISM
     private void Fire()
@@ -54,10 +59,13 @@ public class PlayerFireWeapon : MonoBehaviour
         //LASER HITSCAN
         if (typeWeapon == weaponType.laser)
         {
+			projectile.SetActive(false);
+			PlaySound (fireClip);
+			projectile.SetActive(true);
             Vector3 dir = transform.TransformDirection(Vector3.forward);
             if (Physics.Raycast(transform.position, dir, out hit, maxRange))
             {
-
+				
 
                // Debug.Log(hit.transform.name + " found!");// declares if object was found
               //  print("Found a target game object distance of " + hit.distance);//Declares target distance
@@ -79,6 +87,7 @@ public class PlayerFireWeapon : MonoBehaviour
             Vector3 dir = transform.TransformDirection(Vector3.forward);
             if (Physics.Raycast(transform.position, dir, out hit, maxRange))//If target detected then fire
             {
+				PlaySound (fireClip);
                 Vector3 offset = new Vector3(0, 0, 0);
                 clone = Instantiate(projectile, transform.position + offset, transform.rotation) as GameObject;
                 target = hit.collider.gameObject;//assigns target
@@ -90,7 +99,9 @@ public class PlayerFireWeapon : MonoBehaviour
                // print("Found a target game object distance of " + hit.distance);//Declares target distance
              //   print("firing missile");//Declares when Target us damaged
             }
-            else if (target != null) {// if target not detected but target not null fire
+            else if (target != null) {
+				// if target not detected but target not null fire
+				PlaySound (fireClip);
                 Vector3 offset = new Vector3(0, 0, 0);
                 clone = Instantiate(projectile, transform.position + offset, transform.rotation) as GameObject;
                 missile = (MissileScript)clone.GetComponent(typeof(MissileScript));
@@ -101,7 +112,7 @@ public class PlayerFireWeapon : MonoBehaviour
         if (typeWeapon == weaponType.turret)
         {//fires a cloned projectile
        //     print("Cannon Fire!");
-
+			PlaySound(fireClip);
             Vector3 offset = new Vector3(0, 0, 0);
             Vector3 bulletTrajectory = new Vector3(0, 0, speed);
             clone = Instantiate(projectile, transform.position + offset, transform.rotation) as GameObject;
@@ -111,6 +122,10 @@ public class PlayerFireWeapon : MonoBehaviour
         }
 
     }
-
+	void PlaySound(AudioClip audioClip)
+	{
+		GetComponent<AudioSource>().clip = audioClip;
+		GetComponent<AudioSource>().Play();
+	}
 }
 
